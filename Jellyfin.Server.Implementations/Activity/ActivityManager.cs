@@ -38,9 +38,10 @@ namespace Jellyfin.Server.Implementations.Activity
             {
                 dbContext.ActivityLogs.Add(entry);
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                EntryCreated.Invoke(this, new GenericEventArgs<ActivityLogEntry>(ConvertToOldModel(entry)));
             }
 
-            EntryCreated?.Invoke(this, new GenericEventArgs<ActivityLogEntry>(ConvertToOldModel(entry)));
+           
         }
 
         /// <inheritdoc/>
